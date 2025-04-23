@@ -3,7 +3,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-
     [SerializeField] private float moveSpeed = 5f;
 
     private Vector2 move;
@@ -15,12 +14,12 @@ public class PlayerController : MonoBehaviour
     }
 
     // Méthode appelée par le système d'Input
-    public void Move (InputAction.CallbackContext context)
+    public void Move(InputAction.CallbackContext context)
     {
         move = context.ReadValue<Vector2>();
     }
 
-    public void Run (InputAction.CallbackContext context)
+    public void Run(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
@@ -29,6 +28,19 @@ public class PlayerController : MonoBehaviour
         else if (context.canceled)
         {
             moveSpeed /= 2; // Rétablit la vitesse de déplacement
+        }
+    }
+
+    private void Update()
+    {
+        // Vérifier si le joueur est en mouvement
+        if (move != Vector2.zero)
+        {
+            // Calculer l'angle de rotation en fonction de la direction du mouvement
+            float angle = Mathf.Atan2(move.y, move.x) * Mathf.Rad2Deg;
+
+            // Appliquer la rotation au Transform du joueur
+            transform.rotation = Quaternion.Euler(0, 0, angle);
         }
     }
 

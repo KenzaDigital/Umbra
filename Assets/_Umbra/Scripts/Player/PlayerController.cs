@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float originalSpeed; // Vitesse normale
     [SerializeField] private float runSpeed = 10f;
     [SerializeField] private float runDuration = 3f;
-    [SerializeField] private float runCooldown = 10f;
+    [SerializeField] private float runCooldown = 20f;
 
     private Vector2 move;
     private Rigidbody2D rb;

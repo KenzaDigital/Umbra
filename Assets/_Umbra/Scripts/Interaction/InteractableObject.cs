@@ -43,6 +43,7 @@ public class InteractableObject : MonoBehaviour
                 break;
 
             case InteractableType.Battery:
+               
                 Debug.Log("Interacting with a battery.");
                 break;
 

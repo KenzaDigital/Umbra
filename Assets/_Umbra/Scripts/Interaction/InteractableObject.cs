@@ -3,12 +3,10 @@ using TMPro;
 
 
 public enum InteractableType
-    {
-
-    Door, Note ,Key ,Battery
-
-    }
-public class InteractableObject : MonoBehaviour
+{
+    Door, Note, Key, Battery
+}
+public class InteractableObject : MonoBehaviour, IInteractable // Implémentation de l'interface
 {
     public InteractableType interactableType;
     public GameObject panelToShow;
@@ -43,7 +41,15 @@ public class InteractableObject : MonoBehaviour
                 break;
 
             case InteractableType.Battery:
-               
+                var energyScript = GameObject.FindWithTag("Player").GetComponent<PlayerEnergy>();
+                if (energyScript != null)
+                {
+                    energyScript.Recharge(energyAmount);
+                }
+                else
+                {
+                    Debug.LogWarning("PlayerEnergy script not found on the Player object.");
+                }
                 Debug.Log("Interacting with a battery.");
                 break;
 
@@ -51,5 +57,17 @@ public class InteractableObject : MonoBehaviour
                 Debug.LogWarning("Unknown interaction type.");
                 break;
         }
+    }
+
+    public string GetInteractionPrompt()
+    {
+        return interactableType switch
+        {
+            InteractableType.Door => "Press E to open the door.",
+            InteractableType.Note => "Press E to read the note.",
+            InteractableType.Key => "Press E to pick up the key.",
+            InteractableType.Battery => "Press E to recharge energy.",
+            _ => "Press E to interact."
+        };
     }
 }

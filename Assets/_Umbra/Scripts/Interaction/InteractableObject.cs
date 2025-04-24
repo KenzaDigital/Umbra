@@ -1,29 +1,29 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using TMPro;
 
 
-public enum InterractableType
+public enum InteractableType
+    {
+
+    Door, Note ,Key ,Battery
+
+    }
+public class InteractableObject : MonoBehaviour
 {
-    Door, Note, Key, Battery
-}
-public class InterractableObjc : MonoBehaviour
-{
-    public InterractableType interractableType;
+    public InteractableType interactableType;
     public GameObject panelToShow;
     public TextMeshProUGUI textToShow;
-    public int EnergyAmount = 25;
+    public int energyAmount = 25;
 
-    public void Interract()
+    public void Interact()
     {
-        switch (interractableType)
+        switch (interactableType)
         {
-            case InterractableType.Door:
-                // Handle door interaction
+            case InteractableType.Door:
                 Debug.Log("Interacting with a door.");
                 break;
 
-            case InterractableType.Note:
+            case InteractableType.Note:
                 if (panelToShow != null)
                 {
                     panelToShow.SetActive(true);
@@ -38,13 +38,11 @@ public class InterractableObjc : MonoBehaviour
                 }
                 break;
 
-            case InterractableType.Key:
-                // Handle key interaction
+            case InteractableType.Key:
                 Debug.Log("Interacting with a key.");
                 break;
 
-            case InterractableType.Battery:
-                // Handle battery interaction
+            case InteractableType.Battery:
                 Debug.Log("Interacting with a battery.");
                 break;
 
@@ -54,4 +52,3 @@ public class InterractableObjc : MonoBehaviour
         }
     }
 }
-

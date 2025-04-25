@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Door
   m_EditorClassIdentifier: 
   type: 0
-  interactionPrompt: 
+  interactionPrompt: Ouvrir la porte
   noteText: 
   energyAmount: 0
   isReusable: 0

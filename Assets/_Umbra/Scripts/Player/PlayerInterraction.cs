@@ -63,7 +63,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log($"PlayerInteraction: OnTriggerExit2D called with {other.gameObject.name}.");
+        
 
         if (other == null)
         {

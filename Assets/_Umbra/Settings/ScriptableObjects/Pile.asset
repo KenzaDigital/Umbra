@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af7ef9ad5224bf4691e541f9e821603, type: 3}
   m_Name: Pile
   m_EditorClassIdentifier: 
-  type: 0
-  interactionPrompt: 
+  type: 3
+  interactionPrompt: Ramasser Pile
   noteText: 
-  energyAmount: 0
+  energyAmount: 30
   isReusable: 0

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: SummerTrees 1_18
+  m_Name: pixil-frame-0 (6) 1_0
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -1389483419, guid: 43f142d412fdf6b4fbf78e15045e4833, type: 3}
+  m_Sprite: {fileID: -3771315408923843656, guid: df1646289267cd84aa4d51763d2e7a50, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

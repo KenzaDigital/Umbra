@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 
@@ -15,7 +15,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         Debug.Log("PlayerInteraction: Awake called.");
 
-        // S'assurer que le prompt est désactivé au démarrage
+        // Assurer que le prompt est dÃ©sactivÃ© au dÃ©marrage
         if (interactionPromptPanel != null)
         {
             interactionPromptPanel.SetActive(false);
@@ -31,33 +31,35 @@ public class PlayerInteraction : MonoBehaviour
     {
         Debug.Log($"PlayerInteraction: OnTriggerEnter2D called with {other.gameObject.name}.");
 
-        if (other == null)
+        // VÃ©rifier si l'objet est dans le Layer Interactables
+        if (other.gameObject.layer == LayerMask.NameToLayer("Interactable"))
         {
-            Debug.LogError("PlayerInteraction: Collider2D is null in OnTriggerEnter2D.");
-            return;
-        }
+            IInteractable interactable = other.GetComponentInParent<IInteractable>();
 
-        IInteractable interactable = other.GetComponent<IInteractable>();
-
-        if (interactable != null)
-        {
-            Debug.Log($"PlayerInteraction: Interactable object detected: {other.gameObject.name}.");
-            currentInteractable = interactable;
-
-            if (interactionPromptPanel != null && interactionPromptText != null)
+            if (interactable != null)
             {
-                interactionPromptPanel.SetActive(true);
-                interactionPromptText.text = currentInteractable.GetInteractionPrompt();
-                Debug.Log($"PlayerInteraction: Interaction prompt displayed with text: {currentInteractable.GetInteractionPrompt()}.");
+                Debug.Log($"PlayerInteraction: Interactable object detected: {interactable.GetType()} on {other.gameObject.name}");
+                currentInteractable = interactable;
+
+                if (interactionPromptPanel != null && interactionPromptText != null)
+                {
+                    interactionPromptPanel.SetActive(true);
+                    interactionPromptText.text = currentInteractable.GetInteractionPrompt();
+                    Debug.Log($"PlayerInteraction: Interaction prompt displayed with text: {currentInteractable.GetInteractionPrompt()}.");
+                }
+                else
+                {
+                    Debug.LogError("PlayerInteraction: Interaction prompt panel or text is null.");
+                }
             }
             else
             {
-                Debug.LogError("PlayerInteraction: Interaction prompt panel or text is null.");
+                Debug.Log($"PlayerInteraction: {other.gameObject.name} is not interactable.");
             }
         }
         else
         {
-            Debug.Log($"PlayerInteraction: {other.gameObject.name} is not interactable.");
+            Debug.Log($"PlayerInteraction: {other.gameObject.name} is not in the Interactables layer.");
         }
     }
 
@@ -65,22 +67,14 @@ public class PlayerInteraction : MonoBehaviour
     {
         Debug.Log($"PlayerInteraction: OnTriggerExit2D called with {other.gameObject.name}.");
 
-        if (other == null)
-        {
-            Debug.LogError("PlayerInteraction: Collider2D is null in OnTriggerExit2D.");
-            return;
-        }
-
-        IInteractable interactable = other.GetComponent<IInteractable>();
-
-        if (currentInteractable == interactable)
+        if (currentInteractable != null && other.GetComponentInParent<IInteractable>() == currentInteractable)
         {
             Debug.Log($"PlayerInteraction: Exiting interaction with {other.gameObject.name}.");
             currentInteractable = null;
 
             if (interactionPromptPanel != null)
             {
-                isInteracting = false; // Réinitialise l'état d'interaction
+                isInteracting = false; // RÃ©initialise l'Ã©tat d'interaction
                 interactionPromptPanel.SetActive(false);
                 Debug.Log("PlayerInteraction: Interaction prompt panel disabled.");
             }
@@ -101,7 +95,7 @@ public class PlayerInteraction : MonoBehaviour
             isInteracting = true;
             currentInteractable.Interact();
 
-            // Réinitialise l'état d'interaction après l'interaction
+            // RÃ©initialise l'Ã©tat d'interaction aprÃ¨s l'interaction
             isInteracting = false;
         }
         else if (currentInteractable == null)

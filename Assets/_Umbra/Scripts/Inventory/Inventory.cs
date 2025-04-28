@@ -1,17 +1,20 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public bool hasKey = false; // Indique si le joueur possède une clé
+    private HashSet<int> keys = new HashSet<int>(); // Ensemble des identifiants des clés
 
-    public void AddKey()
+    public void AddKey(int keyID)
     {
-        hasKey = true;
-        Debug.Log("Key added to inventory.");
+        keys.Add(keyID);
+        Debug.Log($"Key with ID {keyID} added to inventory. Current keys: {string.Join(", ", keys)}");
     }
 
-    public bool HasKey()
+    public bool HasKey(int keyID)
     {
+        bool hasKey = keys.Contains(keyID);
+        Debug.Log($"Checking for key with ID {keyID}: {hasKey}");
         return hasKey;
     }
 }

@@ -63,7 +63,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        
+        Debug.Log($"PlayerInteraction: OnTriggerExit2D called with {other.gameObject.name}.");
 
         if (other == null)
         {
@@ -80,7 +80,7 @@ public class PlayerInteraction : MonoBehaviour
 
             if (interactionPromptPanel != null)
             {
-                isInteracting = false;
+                isInteracting = false; // Réinitialise l'état d'interaction
                 interactionPromptPanel.SetActive(false);
                 Debug.Log("PlayerInteraction: Interaction prompt panel disabled.");
             }
@@ -100,6 +100,9 @@ public class PlayerInteraction : MonoBehaviour
             Debug.Log($"PlayerInteraction: Interacting with {currentInteractable.GetInteractionPrompt()}.");
             isInteracting = true;
             currentInteractable.Interact();
+
+            // Réinitialise l'état d'interaction après l'interaction
+            isInteracting = false;
         }
         else if (currentInteractable == null)
         {

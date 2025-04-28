@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Battery
   - Key
+  - Door1
+  - Door3
+  - DoorToilet
+  - Note
   layers:
   - Default
   - TransparentFX

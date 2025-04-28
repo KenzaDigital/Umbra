@@ -15,7 +15,6 @@ public class PlayerInteraction : MonoBehaviour
     {
         Debug.Log("PlayerInteraction: Awake called.");
 
-        // Assurer que le prompt est désactivé au démarrage
         if (interactionPromptPanel != null)
         {
             interactionPromptPanel.SetActive(false);
@@ -31,7 +30,6 @@ public class PlayerInteraction : MonoBehaviour
     {
         Debug.Log($"PlayerInteraction: OnTriggerEnter2D called with {other.gameObject.name}.");
 
-        // Vérifier si l'objet est dans le Layer Interactables
         if (other.gameObject.layer == LayerMask.NameToLayer("Interactable"))
         {
             IInteractable interactable = other.GetComponentInParent<IInteractable>();
@@ -74,7 +72,7 @@ public class PlayerInteraction : MonoBehaviour
 
             if (interactionPromptPanel != null)
             {
-                isInteracting = false; // Réinitialise l'état d'interaction
+                isInteracting = false;
                 interactionPromptPanel.SetActive(false);
                 Debug.Log("PlayerInteraction: Interaction prompt panel disabled.");
             }
@@ -94,8 +92,6 @@ public class PlayerInteraction : MonoBehaviour
             Debug.Log($"PlayerInteraction: Interacting with {currentInteractable.GetInteractionPrompt()}.");
             isInteracting = true;
             currentInteractable.Interact();
-
-            // Réinitialise l'état d'interaction après l'interaction
             isInteracting = false;
         }
         else if (currentInteractable == null)

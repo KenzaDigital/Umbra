@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    private HashSet<int> keys = new HashSet<int>(); // Ensemble des identifiants des clés
+    private HashSet<int> keys = new HashSet<int>();
 
     public void AddKey(int keyID)
     {

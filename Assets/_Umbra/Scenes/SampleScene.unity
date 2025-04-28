@@ -613,6 +613,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -738,6 +739,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e93a3b164ed62f54aa7bc4f4346c2e54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 972971282}
+  smoothSpeed: 5
+  offset: {x: 0, y: 0, z: -10}
+  useBoundaries: 0
+  minX: -10
+  maxX: 10
+  minY: -10
+  maxY: 10
+  snapDistance: 0.05
 --- !u!1 &570504460
 GameObject:
   m_ObjectHideFlags: 0
@@ -9367,6 +9389,7 @@ GameObject:
   - component: {fileID: 974381759}
   - component: {fileID: 974381758}
   - component: {fileID: 974381760}
+  - component: {fileID: 974381761}
   m_Layer: 0
   m_Name: TorcheLight
   m_TagString: Untagged
@@ -9455,6 +9478,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 972971282}
   offset: {x: 0.3, y: 0.3, z: 0}
+--- !u!114 &974381761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974381757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab84eebabfa91ac4e92989e9b7b98b33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxEnergy: 100
+  currentEnergy: 100
+  energyConsumption: 10
+  torchLight: {fileID: 0}
+  lowEnergyThreshold: 20
+  flickerFrequency: 0.1
 --- !u!114 &1057148390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9800,7 +9841,7 @@ MonoBehaviour:
   panelToShow: {fileID: 0}
   textToShow: {fileID: 0}
   energyAmount: 0
-  keyID: 4
+  keyID: 5
 --- !u!61 &1305588594
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -11070,7 +11111,7 @@ MonoBehaviour:
   panelToShow: {fileID: 0}
   textToShow: {fileID: 0}
   energyAmount: 25
-  keyID: 5
+  keyID: 4
 --- !u!61 &1438703792
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12988,7 +13029,7 @@ MonoBehaviour:
   panelToShow: {fileID: 0}
   textToShow: {fileID: 0}
   energyAmount: 0
-  keyID: 5
+  keyID: 4
 --- !u!61 &1927089287
 BoxCollider2D:
   m_ObjectHideFlags: 0

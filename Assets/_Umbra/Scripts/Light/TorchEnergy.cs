@@ -1,12 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class TorchEnergy : MonoBehaviour
 {
     public float maxEnergy = 100f; // Énergie maximale
     public float currentEnergy = 100f; // Énergie actuelle
     public float energyConsumption = 10f; // Énergie consommée par seconde
-    public Light torchLight; // Référence à la lumière de la torche
+    public Light2D torchLight; // Référence à la lumière de la torche
     public float lowEnergyThreshold = 20f; // Seuil d'énergie faible
     public float flickerFrequency = 0.1f; // Fréquence de clignotement en secondes
     private bool isFlickering = false; // Indique si la torche clignote

@@ -18,17 +18,17 @@ public class PlayerInteraction : MonoBehaviour
         if (interactionPromptPanel != null)
         {
             interactionPromptPanel.SetActive(false);
-            Debug.Log("PlayerInteraction: Interaction prompt panel disabled at start.");
+           // Debug.Log("PlayerInteraction: Interaction prompt panel disabled at start.");
         }
         else
         {
-            Debug.LogWarning("PlayerInteraction: Interaction prompt panel is not assigned.");
+           // Debug.LogWarning("PlayerInteraction: Interaction prompt panel is not assigned.");
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log($"PlayerInteraction: OnTriggerEnter2D called with {other.gameObject.name}.");
+        //Debug.Log($"PlayerInteraction: OnTriggerEnter2D called with {other.gameObject.name}.");
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Interactable"))
         {
@@ -43,11 +43,11 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     interactionPromptPanel.SetActive(true);
                     interactionPromptText.text = currentInteractable.GetInteractionPrompt();
-                    Debug.Log($"PlayerInteraction: Interaction prompt displayed with text: {currentInteractable.GetInteractionPrompt()}.");
+                   // Debug.Log($"PlayerInteraction: Interaction prompt displayed with text: {currentInteractable.GetInteractionPrompt()}.");
                 }
                 else
                 {
-                    Debug.LogError("PlayerInteraction: Interaction prompt panel or text is null.");
+                    //Debug.LogError("PlayerInteraction: Interaction prompt panel or text is null.");
                 }
             }
             else
@@ -57,7 +57,7 @@ public class PlayerInteraction : MonoBehaviour
         }
         else
         {
-            Debug.Log($"PlayerInteraction: {other.gameObject.name} is not in the Interactables layer.");
+            //Debug.Log($"PlayerInteraction: {other.gameObject.name} is not in the Interactables layer.");
         }
     }
 
@@ -74,7 +74,7 @@ public class PlayerInteraction : MonoBehaviour
             {
                 isInteracting = false;
                 interactionPromptPanel.SetActive(false);
-                Debug.Log("PlayerInteraction: Interaction prompt panel disabled.");
+               // Debug.Log("PlayerInteraction: Interaction prompt panel disabled.");
             }
         }
         else

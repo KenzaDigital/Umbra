@@ -95,7 +95,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
                 {
                     // Ajoute la clé à l'inventaire
                     inventory.AddKey(keyID);
-                    Debug.Log($"Key with ID {keyID} added to inventory!");
+                    //Debug.Log($"Key with ID {keyID} added to inventory!");
 
                     // Désactive l'objet clé après interaction
                     gameObject.SetActive(false);

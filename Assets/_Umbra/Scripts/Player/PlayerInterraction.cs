@@ -114,4 +114,12 @@ public class PlayerInteraction : MonoBehaviour
             }
         }
     }
+    public void DisableInteractionPrompt()
+    {
+        if (interactionPromptPanel != null)
+        {
+            interactionPromptPanel.SetActive(false);
+            Debug.Log("Interaction prompt disabled.");
+        }
+    }
 }

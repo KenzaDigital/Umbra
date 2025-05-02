@@ -7,7 +7,7 @@ public class InteractableData : ScriptableObject
     public string interactionPrompt;
     public string noteText;
     public int energyAmount;
+    public int keyID;
     public bool isReusable;
-
-
 }
+

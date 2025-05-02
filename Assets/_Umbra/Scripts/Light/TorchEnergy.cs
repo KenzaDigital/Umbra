@@ -53,6 +53,16 @@ public class TorchEnergy : MonoBehaviour
 
         isFlickering = false;
     }
+    public void Recharge(float amount)
+    {
+        currentEnergy = Mathf.Min(currentEnergy + amount, maxEnergy);
+        if (!torchLight.enabled && currentEnergy > 0)
+        {
+            torchLight.enabled = true; // Rallume si elle était éteinte
+        }
+        Debug.Log($"Torch recharged by {amount}. Current energy: {currentEnergy}");
+    }
+
 
     private void ResetLightIntensity()
     {

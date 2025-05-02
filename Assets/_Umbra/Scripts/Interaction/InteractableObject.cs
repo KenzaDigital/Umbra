@@ -97,20 +97,17 @@ public class InteractableObject : MonoBehaviour, IInteractable
                 break;
 
             case InteractableType.Battery:
-                var energyScript = player.GetComponent<PlayerEnergy>();
+         
+                var energyScript = player.GetComponentInChildren<TorchEnergy>();
                 if (energyScript != null)
                 {
                     energyScript.Recharge(energyAmount);
                 }
                 else
                 {
-                    Debug.LogWarning("PlayerEnergy script not found on the Player object.");
+                    Debug.LogWarning("TorchEnergy script not found on the Player object.");
                 }
                 Debug.Log("Interacting with a battery.");
-                break;
-
-            default:
-                Debug.LogWarning($"Unknown interaction type for object: {gameObject.name}");
                 break;
         }
     }

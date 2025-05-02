@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 
 
@@ -87,21 +88,42 @@ public class InteractableObject : MonoBehaviour, IInteractable
                     Debug.LogWarning("panelToShow is not assigned for this note.");
                 }
                 break;
-          
 
             case InteractableType.Key:
                 var inventory = player.GetComponent<Inventory>();
                 if (inventory != null)
                 {
+                    // Ajoute la clé à l'inventaire
                     inventory.AddKey(keyID);
-                    Debug.Log("Key added to inventory!");
+                    //Debug.Log($"Key with ID {keyID} added to inventory!");
+
+                    // Désactive l'objet clé après interaction
                     gameObject.SetActive(false);
+
+                    // Active le panneau pour afficher un message ou une icône
+                    if (panelToShow != null)
+                    {
+                        panelToShow.SetActive(true);
+                        var textComponent = panelToShow.GetComponent<TextMeshProUGUI>();
+                        if (textComponent != null)
+                        {
+                            textComponent.text = $"Key with ID {keyID} added to inventory!";
+                           
+                        }
+                        else
+                        {
+                           // Debug.LogWarning("panelToShow does not have a TextMeshProUGUI component.");
+                        }
+
+          
+                    }
                 }
                 else
                 {
-                    //Debug.LogError("Inventory component not found on the Player!");
+                    Debug.LogError("Inventory component not found on the Player!");
                 }
                 break;
+
 
             case InteractableType.Battery:
          
@@ -164,4 +186,5 @@ public class InteractableObject : MonoBehaviour, IInteractable
             Debug.Log("Note panel closed.");
         }
     }
+   
 }

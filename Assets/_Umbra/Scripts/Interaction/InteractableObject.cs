@@ -97,8 +97,16 @@ public class InteractableObject : MonoBehaviour, IInteractable
                     inventory.AddKey(keyID);
                     //Debug.Log($"Key with ID {keyID} added to inventory!");
 
+
                     // Désactive l'objet clé après interaction
                     gameObject.SetActive(false);
+
+                    // Désactive manuellement le prompt s'il existe
+                    var playerInteraction = player.GetComponent<PlayerInteraction>();
+                    if (playerInteraction != null)
+                    {
+                        playerInteraction.DisableInteractionPrompt();
+                    }
 
                     // Active le panneau pour afficher un message ou une icône
                     if (panelToShow != null)

@@ -18,11 +18,11 @@ public class PlayerInteraction : MonoBehaviour
         if (interactionPromptPanel != null)
         {
             interactionPromptPanel.SetActive(false);
-           // Debug.Log("PlayerInteraction: Interaction prompt panel disabled at start.");
+            // Debug.Log("PlayerInteraction: Interaction prompt panel disabled at start.");
         }
         else
         {
-           // Debug.LogWarning("PlayerInteraction: Interaction prompt panel is not assigned.");
+            // Debug.LogWarning("PlayerInteraction: Interaction prompt panel is not assigned.");
         }
     }
 
@@ -43,7 +43,7 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     interactionPromptPanel.SetActive(true);
                     interactionPromptText.text = currentInteractable.GetInteractionPrompt();
-                   // Debug.Log($"PlayerInteraction: Interaction prompt displayed with text: {currentInteractable.GetInteractionPrompt()}.");
+                    // Debug.Log($"PlayerInteraction: Interaction prompt displayed with text: {currentInteractable.GetInteractionPrompt()}.");
                 }
                 else
                 {
@@ -74,7 +74,7 @@ public class PlayerInteraction : MonoBehaviour
             {
                 isInteracting = false;
                 interactionPromptPanel.SetActive(false);
-               // Debug.Log("PlayerInteraction: Interaction prompt panel disabled.");
+                // Debug.Log("PlayerInteraction: Interaction prompt panel disabled.");
             }
         }
         else
@@ -101,6 +101,17 @@ public class PlayerInteraction : MonoBehaviour
         else if (isInteracting)
         {
             Debug.LogWarning("PlayerInteraction: Already interacting with an object.");
+        }
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape)) // Appuyez sur "Échap" pour fermer le panneau
+        {
+            var interactableObject = currentInteractable as InteractableObject;
+            if (interactableObject != null && interactableObject.interactableType == InteractableType.Note)
+            {
+                interactableObject.CloseNotePanel();
+            }
         }
     }
 }

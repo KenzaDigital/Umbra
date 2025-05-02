@@ -26,6 +26,11 @@ public class InteractableObject : MonoBehaviour, IInteractable
         {
             Debug.LogError("Player object with tag 'Player' not found.");
         }
+
+        if (panelToShow != null)
+        {
+            panelToShow.SetActive(false); // Désactive le Canvas des notes par défaut
+        }
     }
 
     public void Interact()
@@ -63,24 +68,26 @@ public class InteractableObject : MonoBehaviour, IInteractable
 
             case InteractableType.Note:
                 if (panelToShow != null)
+               
                 {
-                    panelToShow.SetActive(true);
+                    panelToShow.SetActive(true); // Active le Canvas des notes
                     var textComponent = panelToShow.GetComponent<TextMeshProUGUI>();
                     if (textComponent != null)
                     {
-                        textComponent.text = textToShow.text;
+                        textComponent.text = textToShow.text; // Affiche le texte de la note
                         Debug.Log("Note displayed: " + textToShow.text);
                     }
                     else
                     {
-                        //Debug.LogWarning("panelToShow does not have a TextMeshProUGUI component.");
+                        Debug.LogWarning("panelToShow does not have a TextMeshProUGUI component.");
                     }
                 }
                 else
                 {
-                   // Debug.LogWarning("panelToShow is not assigned for this note.");
+                    Debug.LogWarning("panelToShow is not assigned for this note.");
                 }
                 break;
+          
 
             case InteractableType.Key:
                 var inventory = player.GetComponent<Inventory>();
@@ -148,5 +155,13 @@ public class InteractableObject : MonoBehaviour, IInteractable
             InteractableType.Battery => "Press E to recharge energy.",
             _ => "Press E to interact."
         };
+    }
+    public void CloseNotePanel()
+    {
+        if (panelToShow != null)
+        {
+            panelToShow.SetActive(false);
+            Debug.Log("Note panel closed.");
+        }
     }
 }

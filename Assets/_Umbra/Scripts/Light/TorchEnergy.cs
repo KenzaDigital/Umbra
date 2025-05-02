@@ -1,25 +1,43 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 public class TorchEnergy : MonoBehaviour
 {
-    public float maxEnergy = 100f; // Énergie maximale
-    public float currentEnergy = 100f; // Énergie actuelle
-    public float energyConsumption = 10f; // Énergie consommée par seconde
-    public Light2D torchLight; // Référence à la lumière de la torche
-    public float lowEnergyThreshold = 20f; // Seuil d'énergie faible
-    public float flickerFrequency = 0.1f; // Fréquence de clignotement en secondes
-    private bool isFlickering = false; // Indique si la torche clignote
+    [Header("Energy Settings")]
+    public float maxEnergy = 100f;
+    public float currentEnergy = 100f;
+    public float energyConsumption = 10f;
+
+    [Header("Light & Flicker")]
+    public Light2D torchLight;
+    public float lowEnergyThreshold = 20f;
+    public float flickerFrequency = 0.1f;
+    private bool isFlickering = false;
+
+    [Header("UI")]
+    public Slider energySlider;
+    public Image sliderFillImage; // Pour changer la couleur du fill
+
+    private void Start()
+    {
+        if (energySlider != null)
+        {
+            energySlider.maxValue = maxEnergy;
+            energySlider.value = currentEnergy;
+        }
+    }
 
     private void Update()
     {
         if (currentEnergy > 0)
         {
-            // Réduction de l'énergie au fil du temps
             currentEnergy -= energyConsumption * Time.deltaTime;
 
-            // Appliquez les effets visuels si l'énergie est faible
+            // Mise à jour du slider
+            UpdateSlider();
+
             if (currentEnergy <= lowEnergyThreshold && !isFlickering)
             {
                 StartCoroutine(FlickerEffect());
@@ -33,8 +51,42 @@ public class TorchEnergy : MonoBehaviour
         }
         else
         {
-            // Si l'énergie est épuisée, éteignez la lumière
             torchLight.enabled = false;
+            UpdateSlider();
+        }
+    }
+
+    public void Recharge(float amount)
+    {
+        currentEnergy = Mathf.Min(currentEnergy + amount, maxEnergy);
+
+        if (!torchLight.enabled && currentEnergy > 0)
+        {
+            torchLight.enabled = true;
+        }
+
+        UpdateSlider();
+        Debug.Log($"Torch recharged by {amount}. Current energy: {currentEnergy}");
+    }
+
+    private void UpdateSlider()
+    {
+        if (energySlider != null)
+        {
+            energySlider.value = currentEnergy;
+
+            // Changement de couleur selon le pourcentage
+            if (sliderFillImage != null)
+            {
+                float pct = currentEnergy / maxEnergy;
+
+                if (pct > 0.5f)
+                    sliderFillImage.color = Color.green;
+                else if (pct > 0.2f)
+                    sliderFillImage.color = new Color(1f, 0.64f, 0f); // orange
+                else
+                    sliderFillImage.color = Color.red;
+            }
         }
     }
 
@@ -44,7 +96,6 @@ public class TorchEnergy : MonoBehaviour
 
         while (currentEnergy <= lowEnergyThreshold)
         {
-            // Alterne entre une intensité faible et normale
             torchLight.intensity = Random.Range(0.1f, 0.5f);
             yield return new WaitForSeconds(flickerFrequency);
             torchLight.intensity = Random.Range(0.5f, 1f);
@@ -53,22 +104,12 @@ public class TorchEnergy : MonoBehaviour
 
         isFlickering = false;
     }
-    public void Recharge(float amount)
-    {
-        currentEnergy = Mathf.Min(currentEnergy + amount, maxEnergy);
-        if (!torchLight.enabled && currentEnergy > 0)
-        {
-            torchLight.enabled = true; // Rallume si elle était éteinte
-        }
-        Debug.Log($"Torch recharged by {amount}. Current energy: {currentEnergy}");
-    }
-
 
     private void ResetLightIntensity()
     {
         if (torchLight != null)
         {
-            torchLight.intensity = 1f; // Réglez l'intensité par défaut
+            torchLight.intensity = 1f;
         }
     }
 }

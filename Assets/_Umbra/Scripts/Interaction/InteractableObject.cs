@@ -132,6 +132,21 @@ public class InteractableObject : MonoBehaviour, IInteractable
                 }
                 break;
 
+            case InteractableType.Fragment:
+                // Collecte du fragment et mise à jour dans le FragmentQuestManager
+                var questManager = FindObjectOfType<FragmentQuestManager>(); // Trouve le gestionnaire des fragments dans la scène
+                if (questManager != null)
+                {
+                    questManager.CollectFragment(keyID);  // Utilise le keyID pour identifier le fragment
+                    Debug.Log($"Fragment with ID {keyID} collected!");
+                    gameObject.SetActive(false);  // Désactive l'objet après collecte
+                }
+                else
+                {
+                    Debug.LogError("FragmentQuestManager not found!");
+                }
+                break;
+
 
             case InteractableType.Battery:
          
@@ -147,7 +162,8 @@ public class InteractableObject : MonoBehaviour, IInteractable
                 Debug.Log("Interacting with a battery.");
                 break;
         }
-    }
+       
+        }
 
     private void OpenDoor()
     {

@@ -10210,6 +10210,55 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &836406631
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 836406633}
+  - component: {fileID: 836406632}
+  m_Layer: 0
+  m_Name: FragmentQuestManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &836406632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 836406631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f482a3d2aab17fa4da60e7d80e2697c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fragmentsCollected: 0
+  totalFragments: 4
+  fragmentProgressText: {fileID: 0}
+  endSequenceTrigger: {fileID: 0}
+  fragmentTexts: []
+--- !u!4 &836406633
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 836406631}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &838836423
 GameObject:
   m_ObjectHideFlags: 0
@@ -10678,9 +10727,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "aujurd'hui 14 avril\n\n\nc'etais pour me defendre je n'avais pas le choix
-    \n\n...... je deviens fous\n\nnon je ne suis pas fou \n\naaahhhhh \n\n\nmais
-    je l'ai fait .. et maitenant il n'ya que le silence \n\nje ne merite pas de redemption\n"
+  m_text: "\nOn \xE9tait petit je m'en souviens plus \n\n     je deviens fou\n\nnon
+    je ne suis pas fou \n\naaahhhhh\n \nje ne me souviens que de son ombre sur cette
+    plage\n\nnon pas possible..\n\n\n      \n       je l'ai fait\n\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: abbe5dad64587b44bb3bcfd6a9ac8ab1, type: 2}
   m_sharedMaterial: {fileID: -4697737620755101129, guid: abbe5dad64587b44bb3bcfd6a9ac8ab1, type: 2}
@@ -19571,3 +19620,4 @@ SceneRoots:
   - {fileID: 1449611238}
   - {fileID: 1880766791}
   - {fileID: 37874778}
+  - {fileID: 836406633}

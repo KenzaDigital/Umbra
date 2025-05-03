@@ -5,5 +5,6 @@ public enum InteractableType
     Door,
     Note,
     Key,
-    Battery
+    Battery,
+    Fragment,
 }

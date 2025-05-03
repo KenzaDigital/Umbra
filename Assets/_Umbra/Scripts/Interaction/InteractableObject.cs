@@ -34,6 +34,8 @@ public class InteractableObject : MonoBehaviour, IInteractable
         }
     }
 
+
+
     public void Interact()
     {
         Debug.Log($"Interact method called for object: {gameObject.name} with type: {interactableType}");
@@ -132,7 +134,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
                 }
                 break;
 
-            case InteractableType.Fragment:
+            /*case InteractableType.Fragment:
                 // Collecte du fragment et mise à jour dans le FragmentQuestManager
                 var questManager = FindObjectOfType<FragmentQuestManager>(); // Trouve le gestionnaire des fragments dans la scène
                 if (questManager != null)
@@ -145,7 +147,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
                 {
                     Debug.LogError("FragmentQuestManager not found!");
                 }
-                break;
+                break;*/
 
 
             case InteractableType.Battery:

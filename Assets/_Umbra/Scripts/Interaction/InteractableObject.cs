@@ -120,11 +120,11 @@ public class InteractableObject : MonoBehaviour, IInteractable
                 }
                 break;
 
-            case InteractableType.Fragment:
+          /*  case InteractableType.Fragment:
                 HandleFragmentInteraction(); 
                                              // Affiche un message via le panel
                
-                break;
+                break;*/
 
             case InteractableType.Battery:
                 var energyScript = player.GetComponentInChildren<TorchEnergy>();
@@ -141,7 +141,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
         }
     }
 
-    private void HandleFragmentInteraction()
+    /*private void HandleFragmentInteraction()
     {
         // Utilisation du singleton FragmentQuestManager
         var questManager = FragmentQuestManager.Instance; // Accès direct via le singleton
@@ -162,9 +162,9 @@ public class InteractableObject : MonoBehaviour, IInteractable
         {
             Debug.LogError("FragmentQuestManager not found!");
         }
-    }
+    }*/
 
-    private void ShowFragmentCollectedMessage()
+   /* private void ShowFragmentCollectedMessage()
     {
         if (panelToShow != null)
         {
@@ -181,7 +181,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
                 Debug.LogWarning("panelToShow does not have a TextMeshProUGUI component.");
             }
         }
-    }
+    }*/
 
     private void OpenDoor()
     {

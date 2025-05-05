@@ -9,10 +9,6 @@ public class InteractableObject : MonoBehaviour, IInteractable
     public TextMeshProUGUI textToShow; // Texte spécifique à afficher
     public int energyAmount = 25;
     public int keyID;
-    public int FragmentID;  
-
-    public string fragmentCollectMessage; // Message personnalisé pour la collecte du fragment
-    public int fragmentTotal; // Total de fragments à collecter
 
     private GameObject player;
     private bool isDoorOpened = false;

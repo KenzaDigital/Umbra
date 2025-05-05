@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &37874775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,6 +319,9 @@ MonoBehaviour:
   textToShow: {fileID: 0}
   energyAmount: 25
   keyID: 1
+  FragmentID: 0
+  fragmentCollectMessage: 
+  fragmentTotal: 0
 --- !u!61 &54466885
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1712,6 +1715,9 @@ MonoBehaviour:
   textToShow: {fileID: 1635174297}
   energyAmount: 25
   keyID: 1
+  FragmentID: 0
+  fragmentCollectMessage: 
+  fragmentTotal: 0
 --- !u!61 &483991456
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2507,6 +2513,9 @@ MonoBehaviour:
   textToShow: {fileID: 1010145206}
   energyAmount: 25
   keyID: 0
+  FragmentID: 1
+  fragmentCollectMessage: "Mon fr\xE8re"
+  fragmentTotal: 4
 --- !u!61 &709451667
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2706,6 +2715,9 @@ MonoBehaviour:
   textToShow: {fileID: 112653539}
   energyAmount: 25
   keyID: 0
+  FragmentID: 3
+  fragmentCollectMessage: "que j'ai laiss\xE9 "
+  fragmentTotal: 4
 --- !u!61 &714466109
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10477,15 +10489,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f482a3d2aab17fa4da60e7d80e2697c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fragmentsCollected: 0
-  totalFragments: 4
-  fragmentProgressText: {fileID: 0}
-  endSequenceTrigger: {fileID: 0}
-  fragmentTexts:
-  - "Mon fr\xE8re"
-  - Dors dans l'ombre
-  - "que j'ai laiss\xE9 "
-  - "derri\xE8re moi"
 --- !u!4 &836406633
 Transform:
   m_ObjectHideFlags: 0
@@ -10599,6 +10602,9 @@ MonoBehaviour:
   textToShow: {fileID: 1657807853}
   energyAmount: 25
   keyID: 2
+  FragmentID: 0
+  fragmentCollectMessage: 
+  fragmentTotal: 0
 --- !u!61 &838836428
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10753,6 +10759,9 @@ MonoBehaviour:
   textToShow: {fileID: 0}
   energyAmount: 25
   keyID: 0
+  FragmentID: 0
+  fragmentCollectMessage: 
+  fragmentTotal: 0
 --- !u!61 &876731991
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -11913,6 +11922,9 @@ MonoBehaviour:
   textToShow: {fileID: 896572748}
   energyAmount: 25
   keyID: 0
+  FragmentID: 2
+  fragmentCollectMessage: Dort dans l'ombre
+  fragmentTotal: 4
 --- !u!1 &1271133678
 GameObject:
   m_ObjectHideFlags: 0
@@ -11931,7 +11943,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1271133679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12246,6 +12258,9 @@ MonoBehaviour:
   textToShow: {fileID: 1855311437}
   energyAmount: 0
   keyID: 5
+  FragmentID: 0
+  fragmentCollectMessage: 
+  fragmentTotal: 0
 --- !u!61 &1305588594
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12738,6 +12753,9 @@ MonoBehaviour:
   textToShow: {fileID: 0}
   energyAmount: 25
   keyID: 0
+  FragmentID: 0
+  fragmentCollectMessage: 
+  fragmentTotal: 0
 --- !u!61 &1410307862
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13891,6 +13909,9 @@ MonoBehaviour:
   textToShow: {fileID: 0}
   energyAmount: 25
   keyID: 4
+  FragmentID: 0
+  fragmentCollectMessage: 
+  fragmentTotal: 0
 --- !u!61 &1438703792
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14196,6 +14217,9 @@ MonoBehaviour:
   textToShow: {fileID: 456342036}
   energyAmount: 0
   keyID: 3
+  FragmentID: 0
+  fragmentCollectMessage: 
+  fragmentTotal: 0
 --- !u!61 &1476206088
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14475,6 +14499,9 @@ MonoBehaviour:
   textToShow: {fileID: 0}
   energyAmount: 25
   keyID: 0
+  FragmentID: 0
+  fragmentCollectMessage: 
+  fragmentTotal: 0
 --- !u!61 &1519515125
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14732,6 +14759,9 @@ MonoBehaviour:
   textToShow: {fileID: 0}
   energyAmount: 25
   keyID: 2
+  FragmentID: 0
+  fragmentCollectMessage: 
+  fragmentTotal: 0
 --- !u!61 &1539841077
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14986,6 +15016,9 @@ MonoBehaviour:
   textToShow: {fileID: 451410939}
   energyAmount: 25
   keyID: 0
+  FragmentID: 4
+  fragmentCollectMessage: "derri\xE8re moi"
+  fragmentTotal: 4
 --- !u!61 &1557844502
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -15085,6 +15118,9 @@ MonoBehaviour:
   textToShow: {fileID: 0}
   energyAmount: 25
   keyID: 0
+  FragmentID: 0
+  fragmentCollectMessage: 
+  fragmentTotal: 0
 --- !u!61 &1632939950
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16475,7 +16511,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1880766788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16771,6 +16807,9 @@ MonoBehaviour:
   textToShow: {fileID: 0}
   energyAmount: 25
   keyID: 0
+  FragmentID: 0
+  fragmentCollectMessage: 
+  fragmentTotal: 0
 --- !u!1 &1927089283
 GameObject:
   m_ObjectHideFlags: 0
@@ -16869,6 +16908,9 @@ MonoBehaviour:
   textToShow: {fileID: 368315434}
   energyAmount: 0
   keyID: 4
+  FragmentID: 0
+  fragmentCollectMessage: 
+  fragmentTotal: 0
 --- !u!61 &1927089287
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -17022,6 +17064,9 @@ MonoBehaviour:
   textToShow: {fileID: 0}
   energyAmount: 25
   keyID: 3
+  FragmentID: 0
+  fragmentCollectMessage: 
+  fragmentTotal: 0
 --- !u!61 &1958906188
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -19741,7 +19786,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2098716341
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,13 +9,12 @@ public class InteractableObject : MonoBehaviour, IInteractable
     public TextMeshProUGUI textToShow; // Texte spécifique à afficher
     public int energyAmount = 25;
     public int keyID;
-    public int FragmentID;  
-
-    public string fragmentCollectMessage; // Message personnalisé pour la collecte du fragment
-    public int fragmentTotal; // Total de fragments à collecter
+    public string hintMessage; // Message d'indice à afficher
+    public TextMeshProUGUI hintText; // Référence au TextMeshPro pour afficher l'indice
 
     private GameObject player;
     private bool isDoorOpened = false;
+    private bool isPlayerInRange = false; // Indique si le joueur est dans la zone d'interaction
 
     private void Awake()
     {
@@ -28,6 +27,41 @@ public class InteractableObject : MonoBehaviour, IInteractable
         if (panelToShow != null)
         {
             panelToShow.SetActive(false); // Désactive le Canvas des notes par défaut
+        }
+
+        if (hintText != null)
+        {
+            hintText.text = ""; // Assurez-vous que le texte est vide au départ
+        }
+    }
+
+    private void Update()
+    {
+        // Vérifie si le joueur est dans la zone et appuie sur "E"
+        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
+        {
+            Interact();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerInRange = true; // Le joueur est dans la zone
+            if (interactableType == InteractableType.Note)
+            {
+                ShowHintMessage(); // Affiche le message d'indice
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerInRange = false; // Le joueur quitte la zone
+            HideHintMessage(); // Cache le message d'indice
         }
     }
 
@@ -120,11 +154,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
                 }
                 break;
 
-            case InteractableType.Fragment:
-                HandleFragmentInteraction(); 
-                                             // Affiche un message via le panel
-               
-                break;
+            
 
             case InteractableType.Battery:
                 var energyScript = player.GetComponentInChildren<TorchEnergy>();
@@ -141,48 +171,25 @@ public class InteractableObject : MonoBehaviour, IInteractable
         }
     }
 
-    private void HandleFragmentInteraction()
+    private void ShowHintMessage()
     {
-        // Utilisation du singleton FragmentQuestManager
-        var questManager = FragmentQuestManager.Instance; // Accès direct via le singleton
-
-        if (questManager != null)
+        if (hintText != null)
         {
-            // Collecte du fragment
-            questManager.CollectFragment(FragmentID);
-            Debug.Log($"Fragment with ID {FragmentID} collected!");
-
-            // Affichage du message de collecte du fragment
-            ShowFragmentCollectedMessage();
-
-            // Désactivation de l'objet fragment après collecte
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            Debug.LogError("FragmentQuestManager not found!");
+            hintText.text = hintMessage; // Affiche le message dans l'UI
+            Debug.Log($"Hint displayed: {hintMessage}");
         }
     }
 
-    private void ShowFragmentCollectedMessage()
+    private void HideHintMessage()
     {
-        if (panelToShow != null)
+        if (hintText != null)
         {
-            panelToShow.SetActive(true); // Affiche le panneau des fragments
-            var textComponent = panelToShow.GetComponent<TextMeshProUGUI>();
-            if (textComponent != null)
-            {
-                // Mise à jour du texte du panneau
-                textComponent.text = $"{fragmentCollectMessage} {FragmentQuestManager.Instance.GetFragmentsCollected()}/{fragmentTotal}";
-                Debug.Log($"Fragment with ID {keyID} collected! {fragmentCollectMessage} {FragmentQuestManager.Instance.GetFragmentsCollected()}/{fragmentTotal}");
-            }
-            else
-            {
-                Debug.LogWarning("panelToShow does not have a TextMeshProUGUI component.");
-            }
+            hintText.text = ""; // Efface le message
+            Debug.Log("Hint hidden.");
         }
     }
 
+   
     private void OpenDoor()
     {
         isDoorOpened = true;
@@ -191,7 +198,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
         {
             if (col != null && !col.isTrigger)
             {
-                col.enabled = false; // Désactive les colliders de la porte
+                col.enabled = false;
             }
         }
 
@@ -209,22 +216,18 @@ public class InteractableObject : MonoBehaviour, IInteractable
 
     public string GetInteractionPrompt()
     {
-        return interactableType switch
-        {
-            InteractableType.Door => "Press E to open the door.",
-            InteractableType.Note => "Press E to read the note.",
-            InteractableType.Key => "Press E to pick up the key.",
-            InteractableType.Battery => "Press E to recharge energy.",
-            _ => "Press E to interact."
-        };
+        throw new System.NotImplementedException();
     }
-
     public void CloseNotePanel()
     {
         if (panelToShow != null)
         {
-            panelToShow.SetActive(false);
+            panelToShow.SetActive(false); // Désactive le panneau des notes
             Debug.Log("Note panel closed.");
+        }
+        else
+        {
+            Debug.LogWarning("panelToShow is not assigned.");
         }
     }
 }

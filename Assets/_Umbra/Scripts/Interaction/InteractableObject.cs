@@ -10,6 +10,9 @@ public class InteractableObject : MonoBehaviour, IInteractable
     public int energyAmount = 25;
     public int keyID;
 
+
+
+
     private GameObject player;
     private bool isDoorOpened = false;
 
@@ -91,7 +94,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
                     var playerInteraction = player.GetComponent<PlayerInteraction>();
                     if (playerInteraction != null)
                     {
-                        playerInteraction.DisableInteractionPrompt();
+                       // playerInteraction.DisableInteractionPrompt();
                     }
 
                     // Affiche un message via le panel
@@ -214,6 +217,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
             _ => "Press E to interact."
         };
     }
+
 
     public void CloseNotePanel()
     {

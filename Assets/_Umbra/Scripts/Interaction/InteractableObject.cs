@@ -100,7 +100,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
                     var playerInteraction = player.GetComponent<PlayerInteraction>();
                     if (playerInteraction != null)
                     {
-                       //playerInteraction.DisableInteractionPrompt();
+                      //playerInteraction.DisableInteractionPrompt();
                     }
 
                     // Affiche un message via le panel

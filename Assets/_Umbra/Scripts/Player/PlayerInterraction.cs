@@ -122,7 +122,7 @@ public class PlayerInterraction : MonoBehaviour
             Debug.LogWarning("PlayerInteraction: Already interacting with an object.");
         }
     }
-    private void OnCancel()
+    /*private void OnCancel()
     {
         Debug.Log("PlayerInteraction: OnCancel called.");
 
@@ -135,7 +135,7 @@ public class PlayerInterraction : MonoBehaviour
         {
             Debug.LogWarning("PlayerInteraction: No note panel to close.");
         }
-    }
+    }*/
     private void Update()
     {
        

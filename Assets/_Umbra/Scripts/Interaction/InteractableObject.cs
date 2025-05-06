@@ -32,11 +32,11 @@ public class InteractableObject : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        Debug.Log($"Interact method called for object: {gameObject.name} with type: {interactableType}");
+        //Debug.Log($"Interact method called for object: {gameObject.name} with type: {interactableType}");
 
         if (player == null)
         {
-            Debug.LogError("Player object is not assigned.");
+            //Debug.LogError("Player object is not assigned.");
             return;
         }
 
@@ -57,7 +57,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
                 }
                 else
                 {
-                    Debug.LogError("Inventory script not found on the Player object.");
+                    //Debug.LogError("Inventory script not found on the Player object.");
                 }
                 break;
 
@@ -73,12 +73,12 @@ public class InteractableObject : MonoBehaviour, IInteractable
                     }
                     else
                     {
-                        Debug.LogWarning("panelToShow does not have a TextMeshProUGUI component.");
+                       // Debug.LogWarning("panelToShow does not have a TextMeshProUGUI component.");
                     }
                 }
                 else
                 {
-                    Debug.LogWarning("panelToShow is not assigned for this note.");
+                    //Debug.LogWarning("panelToShow is not assigned for this note.");
                 }
                 break;
 
@@ -115,7 +115,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
                 }
                 else
                 {
-                    Debug.LogError("Inventory component not found on the Player!");
+                   // Debug.LogError("Inventory component not found on the Player!");
                 }
                 break;
 

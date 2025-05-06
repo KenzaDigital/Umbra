@@ -6,19 +6,24 @@ public class PlayerInterraction : MonoBehaviour
 
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    
+
     [Header("UI References")]
     public GameObject interactionPromptPanel;
     public TextMeshProUGUI interactionPromptText;
 
     private bool isInteracting = false;
     private IInteractable currentInteractable;
+    private PlayerInputActions inputActions;
+
+    public object InputActions { get; private set; }
 
     private void Awake()
     {
-        Debug.Log("PlayerInteraction: Awake called.");
+        inputActions = new PlayerInputActions();
 
-        // S'assurer que le prompt est d�sactiv� au d�marrage
+
+
+        // S'assurer que le prompt est désactivé au démarrage
         if (interactionPromptPanel != null)
         {
             interactionPromptPanel.SetActive(false);
@@ -115,6 +120,40 @@ public class PlayerInterraction : MonoBehaviour
         else if (isInteracting)
         {
             Debug.LogWarning("PlayerInteraction: Already interacting with an object.");
+        }
+    }
+    private void OnCancel()
+    {
+        Debug.Log("PlayerInteraction: OnCancel called.");
+
+        var interactableObject = currentInteractable as InteractableObject;
+        if (interactableObject != null && interactableObject.interactableType == InteractableType.Note)
+        {
+            interactableObject.CloseNotePanel();
+        }
+        else
+        {
+            Debug.LogWarning("PlayerInteraction: No note panel to close.");
+        }
+    }
+    private void Update()
+    {
+       
+        // Fermeture avec "Escape"
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("PlayerInteraction: Escape key pressed.");
+
+            var interactableObject = currentInteractable as InteractableObject;
+            if (interactableObject != null && interactableObject.interactableType == InteractableType.Note)
+            {
+                interactableObject.CloseNotePanel();
+                Debug.Log("PlayerInteraction: Note panel closed.");
+            }
+            else
+            {
+                Debug.LogWarning("PlayerInteraction: No note panel to close.");
+            }
         }
     }
 }

@@ -119,11 +119,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
                 }
                 break;
 
-          /*  case InteractableType.Fragment:
-                HandleFragmentInteraction(); 
-                                             // Affiche un message via le panel
-               
-                break;*/
+          
 
             case InteractableType.Battery:
                 var energyScript = player.GetComponentInChildren<TorchEnergy>();

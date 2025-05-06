@@ -35,6 +35,8 @@ public void ShowHint(string text)
             audioSource.Stop(); // Arrête le son d'info
         }
     }
-    
+   
+
+
 }
 

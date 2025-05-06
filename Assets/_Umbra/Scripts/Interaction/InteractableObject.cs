@@ -94,7 +94,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
                     var playerInteraction = player.GetComponent<PlayerInteraction>();
                     if (playerInteraction != null)
                     {
-                       // playerInteraction.DisableInteractionPrompt();
+                       //playerInteraction.DisableInteractionPrompt();
                     }
 
                     // Affiche un message via le panel
@@ -140,47 +140,6 @@ public class InteractableObject : MonoBehaviour, IInteractable
         }
     }
 
-    /*private void HandleFragmentInteraction()
-    {
-        // Utilisation du singleton FragmentQuestManager
-        var questManager = FragmentQuestManager.Instance; // Accès direct via le singleton
-
-        if (questManager != null)
-        {
-            // Collecte du fragment
-            questManager.CollectFragment(FragmentID);
-            Debug.Log($"Fragment with ID {FragmentID} collected!");
-
-            // Affichage du message de collecte du fragment
-            ShowFragmentCollectedMessage();
-
-            // Désactivation de l'objet fragment après collecte
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            Debug.LogError("FragmentQuestManager not found!");
-        }
-    }*/
-
-   /* private void ShowFragmentCollectedMessage()
-    {
-        if (panelToShow != null)
-        {
-            panelToShow.SetActive(true); // Affiche le panneau des fragments
-            var textComponent = panelToShow.GetComponent<TextMeshProUGUI>();
-            if (textComponent != null)
-            {
-                // Mise à jour du texte du panneau
-                textComponent.text = $"{fragmentCollectMessage} {FragmentQuestManager.Instance.GetFragmentsCollected()}/{fragmentTotal}";
-                Debug.Log($"Fragment with ID {keyID} collected! {fragmentCollectMessage} {FragmentQuestManager.Instance.GetFragmentsCollected()}/{fragmentTotal}");
-            }
-            else
-            {
-                Debug.LogWarning("panelToShow does not have a TextMeshProUGUI component.");
-            }
-        }
-    }*/
 
     private void OpenDoor()
     {
@@ -218,7 +177,18 @@ public class InteractableObject : MonoBehaviour, IInteractable
         };
     }
 
-
+    public void DisableInteractionPrompt()
+    {
+        var playerInteraction = player.GetComponent<PlayerInteraction>();
+        if (playerInteraction != null)
+        {
+            //playerInteraction.DisableInteractionPrompt();
+        }
+        else
+        {
+            Debug.LogError("PlayerInteraction component not found on the Player object.");
+        }
+    }
     public void CloseNotePanel()
     {
         if (panelToShow != null)

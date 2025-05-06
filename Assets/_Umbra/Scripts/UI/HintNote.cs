@@ -1,8 +1,10 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class HintNote : MonoBehaviour, IInteractable
 {
-    public HintData hintData;
+    [TextArea]
+    public string hintText = "Voici un indice !";
+
     [SerializeField] private HintDisplayUI hintDisplayUI;
 
     public string GetInteractionPrompt()
@@ -12,22 +14,15 @@ public class HintNote : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        Debug.Log("Interact appelé sur HintNote.");
-
-        if (hintData == null)
-        {
-            Debug.LogError("hintData est null. Assurez-vous qu'il est assigné dans l'inspecteur.");
-            return;
-        }
+        Debug.Log(" Interact appelÃ© sur HintNote.");
 
         if (hintDisplayUI != null)
         {
-            Debug.Log("HintDisplayUI trouvé. Affichage de l'indice...");
-            hintDisplayUI.ShowHint(hintData.hintText);
+            hintDisplayUI.ShowHint(hintText);
         }
         else
         {
-            Debug.LogError("HintDisplayUI n'est pas assigné dans l'inspecteur.");
+            Debug.LogError("HintDisplayUI n'est pas assignÃ© !");
         }
     }
 }

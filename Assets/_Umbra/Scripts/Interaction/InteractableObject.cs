@@ -11,6 +11,8 @@ public class InteractableObject : MonoBehaviour, IInteractable
     public int keyID;
 
 
+    public NpcDialogueData dialogueData; // Le ScriptableObject à assigner
+    public DialogueManager dialogueManager; // Le DialogueManager dans la scène
 
 
     private GameObject player;
@@ -125,7 +127,18 @@ public class InteractableObject : MonoBehaviour, IInteractable
                 }
                 break;
 
-          
+            case InteractableType.Dialogue:
+                if (dialogueManager != null && dialogueData != null)
+                {
+                    dialogueManager.StartDialogue(dialogueData);
+                }
+                else
+                {
+                    Debug.LogWarning("DialogueManager ou DialogueData manquant sur l'objet interactif.");
+                }
+                break;
+
+
 
             case InteractableType.Battery:
                 var energyScript = player.GetComponentInChildren<TorchEnergy>();

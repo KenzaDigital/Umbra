@@ -6,5 +6,6 @@ public enum InteractableType
     Note,
     Key,
     Battery,
+    Dialogue,
     
 }

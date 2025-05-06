@@ -23,6 +23,10 @@ public class PlayerController : MonoBehaviour
     public void Move(InputAction.CallbackContext context)
     {
         move = context.ReadValue<Vector2>();
+        if (audioManager.instance != null)
+        {
+            audioManager.instance.PlaySFX("Walking");
+        }
     }
 
     public void Run(InputAction.CallbackContext context)

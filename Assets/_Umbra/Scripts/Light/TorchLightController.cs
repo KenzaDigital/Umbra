@@ -6,6 +6,7 @@ public class TorchLightController : MonoBehaviour
     [SerializeField] private Vector3 offset; // décalage par rapport au joueur 
     private Vector3 currentOffset; // décalage actuel
     public Light torchlight; // Reference to the torch light component
+    public LayerMask lightMask; // Layer mask for the light
     private void LateUpdate()
     {
         if (Player != null)

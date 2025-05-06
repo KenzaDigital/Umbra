@@ -44,12 +44,11 @@ public class audioManager : MonoBehaviour
             Debug.LogWarning("Music: " + name + " not found!");
             return;
         }
-        else
-        {
-            musicSource.clip = s.clip;
-            musicSource.loop = loop; // Set looping based on the parameter
-            musicSource.Play();
-        }
+
+        // Utilise musicSource pour jouer la musique de fond
+        musicSource.clip = s.clip;
+        musicSource.loop = loop; // Définit si la musique doit boucler
+        musicSource.Play();
     }
 
 
@@ -62,11 +61,9 @@ public class audioManager : MonoBehaviour
             Debug.LogWarning("Sound: " + name + " not found!");
             return;
         }
-        else
-        {
-            sfxSource.clip = s.clip;
-            sfxSource.PlayOneShot(s.clip);
-        }
+
+        // Utilise sfxSource pour jouer les effets sonores
+        sfxSource.PlayOneShot(s.clip);
     }
     public void StopMusic()
     {

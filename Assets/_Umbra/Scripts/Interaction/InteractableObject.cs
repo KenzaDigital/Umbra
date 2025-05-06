@@ -71,14 +71,20 @@ public class InteractableObject : MonoBehaviour, IInteractable
                         textComponent.text = textToShow.text; // Affiche le texte de la note
                         Debug.Log("Note displayed: " + textToShow.text);
                     }
+
+                    // Joue le son d'ouverture de la note
+                    if (audioManager.instance != null)
+                    {
+                        audioManager.instance.PlaySFX("Note");
+                    }
                     else
                     {
-                       // Debug.LogWarning("panelToShow does not have a TextMeshProUGUI component.");
+                        Debug.LogWarning("audioManager instance is null.");
                     }
                 }
                 else
                 {
-                    //Debug.LogWarning("panelToShow is not assigned for this note.");
+                    Debug.LogWarning("panelToShow is not assigned for this note.");
                 }
                 break;
 
@@ -109,7 +115,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
                         }
                         else
                         {
-                            Debug.LogWarning("panelToShow does not have a TextMeshProUGUI component.");
+                           // Debug.LogWarning("panelToShow does not have a TextMeshProUGUI component.");
                         }
                     }
                 }
@@ -153,6 +159,15 @@ public class InteractableObject : MonoBehaviour, IInteractable
         if (animator != null)
         {
             animator.SetTrigger("DoorOpen");
+        }
+
+        if ( audioManager.instance != null)
+        {
+            audioManager.instance.PlaySFX("Door");
+        }
+        else
+        {
+            Debug.LogWarning("audioManager instance is null.");
         }
     }
 

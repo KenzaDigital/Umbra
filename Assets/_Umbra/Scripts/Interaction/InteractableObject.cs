@@ -128,8 +128,10 @@ public class InteractableObject : MonoBehaviour, IInteractable
                 break;
 
             case InteractableType.Dialogue:
+                Debug.Log("Tentative de démarrage du dialogue...");
                 if (dialogueManager != null && dialogueData != null)
                 {
+                    Debug.Log("DialogueManager et DialogueData trouvés. Démarrage du dialogue.");
                     dialogueManager.StartDialogue(dialogueData);
                 }
                 else

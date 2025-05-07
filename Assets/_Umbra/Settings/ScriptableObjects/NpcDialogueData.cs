@@ -5,7 +5,7 @@ public class NpcDialogueData : ScriptableObject
 {
     public string npcName;
     public string[] dialogueLines;
-    public string[] dialogueChoices;
+    public string[] dialogueChoices = new string[4];
     public float typingSpeed = 0.05f;
     public AudioClip VoiceSound;
     public bool[] isChoice;

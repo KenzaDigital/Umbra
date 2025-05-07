@@ -35,10 +35,15 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void ShowFinalChoices(NpcDialogueData data)
+    public GameObject nextButton; 
+
+public void ShowFinalChoices(NpcDialogueData data)
     {
         dialogueText.text = data.finalQuestion;
         npcNameText.text = data.npcName;
+
+        if (nextButton != null)
+            nextButton.SetActive(false); // Cacher le bouton Suivant
 
         for (int i = 0; i < choiceButtons.Length; i++)
         {

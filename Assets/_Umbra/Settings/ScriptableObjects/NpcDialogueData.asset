@@ -26,4 +26,4 @@ MonoBehaviour:
   VoiceSound: {fileID: 0}
   isChoice: 
   finalQuestion: "Ques s'est il pass\xE9 cette nuit l\xE0 ?"
-  correctChoiceIndex: 1
+  correctChoiceIndex: 2

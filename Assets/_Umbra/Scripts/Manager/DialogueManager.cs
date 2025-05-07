@@ -13,6 +13,14 @@ public class DialogueManager : MonoBehaviour
     private int currentLineIndex = 0;
     private NpcDialogueData currentData;
 
+
+    public void Update()
+    {
+        if (dialogueUI.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+        {
+            CloseDialogue();
+        }
+    }
     public void StartDialogue(NpcDialogueData data)
     {
         dialogueUI.SetActive(true);

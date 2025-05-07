@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;  // Pour l'UI (l'effet visuel)
 
 public class SimpleEnemyAI : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class SimpleEnemyAI : MonoBehaviour
     public AudioClip heartbeatSound;
     public AudioClip scaryMusic;
     public float fastHeartbeatPitch = 1.5f;
+
+    [Header("Effets Visuels")]
+    public Image screenOverlay;  // Image pour l'effet visuel
+    public float redOverlaySpeed = 1f;  // Vitesse d'apparition de l'overlay rouge
 
     private int currentPoint = 0;
     private Transform player;
@@ -46,16 +51,28 @@ public class SimpleEnemyAI : MonoBehaviour
 
     void Update()
     {
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player")?.transform;  // Trouver le joueur avec le tag "Player"
+            if (player == null)
+            {
+                Debug.LogError("Le joueur n'a pas été trouvé avec le tag 'Player'.");
+                return;
+            }
+        }
+
         if (isChasing)
         {
             ChasePlayer();
             HandleChaseAudio(true);
+            HandleScreenOverlay(true);  // L'écran devient rouge progressivement
         }
         else
         {
             Patrol();
             DetectPlayer();
             HandleChaseAudio(false);
+            HandleScreenOverlay(false);  // L'écran redevient transparent
         }
     }
 
@@ -117,6 +134,31 @@ public class SimpleEnemyAI : MonoBehaviour
                 musicSource.Stop();
 
             heartbeatSource.pitch = 1f;
+        }
+    }
+
+    // Gérer l'effet visuel de l'écran rouge
+    void HandleScreenOverlay(bool shouldPlay)
+    {
+        if (shouldPlay)
+        {
+            if (screenOverlay != null)
+            {
+                // Augmenter progressivement l'opacité de l'écran
+                Color currentColor = screenOverlay.color;
+                currentColor.a = Mathf.Min(1f, currentColor.a + redOverlaySpeed * Time.deltaTime);
+                screenOverlay.color = currentColor;
+            }
+        }
+        else
+        {
+            if (screenOverlay != null)
+            {
+                // Réduire progressivement l'opacité de l'écran
+                Color currentColor = screenOverlay.color;
+                currentColor.a = Mathf.Max(0f, currentColor.a - redOverlaySpeed * Time.deltaTime);
+                screenOverlay.color = currentColor;
+            }
         }
     }
 

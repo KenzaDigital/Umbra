@@ -13,7 +13,13 @@ public class DialogueManager : MonoBehaviour
     private int currentLineIndex = 0;
     private NpcDialogueData currentData;
 
-
+    private void Start()
+    {
+        foreach (GameObject btn in choiceButtons)
+        {
+            btn.SetActive(false);
+        }
+    }
     public void Update()
     {
         if (dialogueUI.activeSelf && Input.GetKeyDown(KeyCode.Escape))
@@ -59,9 +65,12 @@ public void ShowFinalChoices(NpcDialogueData data)
             if (i < data.dialogueChoices.Length)
             {
                 choiceButtons[i].SetActive(true);
-                choiceButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = data.dialogueChoices[i];
+                TextMeshProUGUI choiceText = choiceButtons[i].GetComponentInChildren<TextMeshProUGUI>(true);
+                choiceText.text = data.dialogueChoices[i];
+                choiceText.gameObject.SetActive(true);
                 choiceButtons[i].GetComponent<Button>().onClick.RemoveAllListeners();
                 choiceButtons[i].GetComponent<Button>().onClick.AddListener(() => OnChoiceSelected(index, data));
+
             }
             else
             {

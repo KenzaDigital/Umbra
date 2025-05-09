@@ -1,5 +1,6 @@
 using UnityEngine;
-using UnityEngine.UI;  // Pour l'UI (l'effet visuel)
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SimpleEnemyAI : MonoBehaviour
 {
@@ -18,8 +19,18 @@ public class SimpleEnemyAI : MonoBehaviour
     public float fastHeartbeatPitch = 1.5f;
 
     [Header("Effets Visuels")]
-    public Image screenOverlay;  // Image pour l'effet visuel
-    public float redOverlaySpeed = 1f;  // Vitesse d'apparition de l'overlay rouge
+    public Image screenOverlay;
+    public float redOverlaySpeed = 1f;
+
+    [Header("Mort du joueur")]
+    public float timeBeforeKill = 5f;
+    private float dangerTimer = 0f;
+    private bool playerKilled = false;
+
+    [Header("Effet Screamer")]
+    public GameObject deathCanvasObject;
+    public AudioClip screamSound;
+    public float timeBeforeGameOver = 2f;
 
     private int currentPoint = 0;
     private Transform player;
@@ -27,6 +38,7 @@ public class SimpleEnemyAI : MonoBehaviour
 
     private AudioSource heartbeatSource;
     private AudioSource musicSource;
+    private AudioSource audioSource;
 
     void Start()
     {
@@ -47,13 +59,20 @@ public class SimpleEnemyAI : MonoBehaviour
         musicSource.clip = scaryMusic;
         musicSource.loop = true;
         musicSource.playOnAwake = false;
+
+        // Ajoute un AudioSource pour le cri
+        audioSource = gameObject.AddComponent<AudioSource>();
+
+        // Désactiver le screamer au départ
+        if (deathCanvasObject != null)
+            deathCanvasObject.SetActive(false);
     }
 
     void Update()
     {
         if (player == null)
         {
-            player = GameObject.FindGameObjectWithTag("Player")?.transform;  // Trouver le joueur avec le tag "Player"
+            player = GameObject.FindGameObjectWithTag("Player")?.transform;
             if (player == null)
             {
                 Debug.LogError("Le joueur n'a pas été trouvé avec le tag 'Player'.");
@@ -65,14 +84,25 @@ public class SimpleEnemyAI : MonoBehaviour
         {
             ChasePlayer();
             HandleChaseAudio(true);
-            HandleScreenOverlay(true);  // L'écran devient rouge progressivement
+            HandleScreenOverlay(true);
+
+            dangerTimer += Time.deltaTime;
+
+            if (dangerTimer >= timeBeforeKill && !playerKilled)
+            {
+                KillPlayer();
+                playerKilled = true;
+            }
         }
         else
         {
             Patrol();
             DetectPlayer();
             HandleChaseAudio(false);
-            HandleScreenOverlay(false);  // L'écran redevient transparent
+            HandleScreenOverlay(false);
+
+            dangerTimer = 0f;
+            playerKilled = false;
         }
     }
 
@@ -137,30 +167,53 @@ public class SimpleEnemyAI : MonoBehaviour
         }
     }
 
-    // Gérer l'effet visuel de l'écran rouge
     void HandleScreenOverlay(bool shouldPlay)
     {
-        if (shouldPlay)
+        if (screenOverlay != null)
         {
-            if (screenOverlay != null)
-            {
-                // Augmenter progressivement l'opacité de l'écran
-                Color currentColor = screenOverlay.color;
+            Color currentColor = screenOverlay.color;
+            if (shouldPlay)
                 currentColor.a = Mathf.Min(1f, currentColor.a + redOverlaySpeed * Time.deltaTime);
-                screenOverlay.color = currentColor;
-            }
-        }
-        else
-        {
-            if (screenOverlay != null)
-            {
-                // Réduire progressivement l'opacité de l'écran
-                Color currentColor = screenOverlay.color;
+            else
                 currentColor.a = Mathf.Max(0f, currentColor.a - redOverlaySpeed * Time.deltaTime);
-                screenOverlay.color = currentColor;
-            }
+
+            screenOverlay.color = currentColor;
         }
     }
+
+    void KillPlayer()
+    {
+        Debug.Log("Le joueur a été englouti !");
+        StartCoroutine(PlayScreamerAndGameOver());
+    }
+
+    System.Collections.IEnumerator PlayScreamerAndGameOver()
+    {
+        if (screamSound != null && audioSource != null)
+            audioSource.PlayOneShot(screamSound);
+
+        if (deathCanvasObject != null)
+        {
+            int flashes = 6;
+            float flashDuration = 0.1f;
+
+            for (int i = 0; i < flashes; i++)
+            {
+                deathCanvasObject.SetActive(true);
+                yield return new WaitForSeconds(flashDuration);
+                deathCanvasObject.SetActive(false);
+                yield return new WaitForSeconds(flashDuration);
+            }
+
+            // Affiche le screamer à la fin
+            deathCanvasObject.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(timeBeforeGameOver);
+        SceneManager.LoadScene("GameOver");
+    }
+
+
 
     void OnDrawGizmosSelected()
     {

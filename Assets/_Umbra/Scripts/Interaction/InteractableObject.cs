@@ -165,7 +165,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
                 }
 
                 // Détruit l'objet batterie après interaction
-                Destroy(gameObject);
+               // Destroy(gameObject);
                 break;
         }
     }

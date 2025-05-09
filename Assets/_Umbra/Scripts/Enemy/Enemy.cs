@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class SimpleEnemyAI : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     [Header("Déplacement")]
     public Transform[] patrolPoints;
@@ -19,8 +19,11 @@ public class SimpleEnemyAI : MonoBehaviour
     public float fastHeartbeatPitch = 1.5f;
 
     [Header("Effets Visuels")]
-    public Image screenOverlay;
+    [SerializeField] private Image fondRouge; // Référence à l'image "FondRouge"
     public float redOverlaySpeed = 1f;
+
+    [Header("Fade Audio")]
+    public float audioFadeSpeed = 1f;
 
     [Header("Mort du joueur")]
     public float timeBeforeKill = 5f;
@@ -42,6 +45,7 @@ public class SimpleEnemyAI : MonoBehaviour
 
     void Start()
     {
+        // Initialisation des AudioSources
         AudioSource[] sources = GetComponents<AudioSource>();
         if (sources.Length < 2)
         {
@@ -55,12 +59,14 @@ public class SimpleEnemyAI : MonoBehaviour
         heartbeatSource.clip = heartbeatSound;
         heartbeatSource.loop = true;
         heartbeatSource.playOnAwake = false;
+        heartbeatSource.volume = 0f;
 
         musicSource.clip = scaryMusic;
         musicSource.loop = true;
         musicSource.playOnAwake = false;
+        musicSource.volume = 0f;
 
-        // Ajoute un AudioSource pour le cri
+        // AudioSource pour le cri
         audioSource = gameObject.AddComponent<AudioSource>();
 
         // Désactiver le screamer au départ
@@ -70,6 +76,7 @@ public class SimpleEnemyAI : MonoBehaviour
 
     void Update()
     {
+        // Vérifie si le joueur est trouvé
         if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player")?.transform;
@@ -104,6 +111,9 @@ public class SimpleEnemyAI : MonoBehaviour
             dangerTimer = 0f;
             playerKilled = false;
         }
+
+        // Ajuste la transparence de "FondRouge"
+        AdjustFondRougeTransparency();
     }
 
     void Patrol()
@@ -145,39 +155,35 @@ public class SimpleEnemyAI : MonoBehaviour
 
     void HandleChaseAudio(bool shouldPlay)
     {
-        if (shouldPlay)
+        float targetVolume = shouldPlay ? 1f : 0f;
+
+        if (heartbeatSource != null)
         {
-            if (!heartbeatSource.isPlaying)
-                heartbeatSource.Play();
-
-            if (!musicSource.isPlaying)
-                musicSource.Play();
-
-            heartbeatSource.pitch = fastHeartbeatPitch;
+            heartbeatSource.volume = Mathf.MoveTowards(heartbeatSource.volume, targetVolume, audioFadeSpeed * Time.deltaTime);
+            if (shouldPlay && !heartbeatSource.isPlaying) heartbeatSource.Play();
+            if (!shouldPlay && heartbeatSource.volume <= 0f && heartbeatSource.isPlaying) heartbeatSource.Stop();
+            heartbeatSource.pitch = shouldPlay ? fastHeartbeatPitch : 1f;
         }
-        else
+
+        if (musicSource != null)
         {
-            if (heartbeatSource.isPlaying)
-                heartbeatSource.Stop();
-
-            if (musicSource.isPlaying)
-                musicSource.Stop();
-
-            heartbeatSource.pitch = 1f;
+            musicSource.volume = Mathf.MoveTowards(musicSource.volume, targetVolume, audioFadeSpeed * Time.deltaTime);
+            if (shouldPlay && !musicSource.isPlaying) musicSource.Play();
+            if (!shouldPlay && musicSource.volume <= 0f && musicSource.isPlaying) musicSource.Stop();
         }
     }
 
     void HandleScreenOverlay(bool shouldPlay)
     {
-        if (screenOverlay != null)
+        if (fondRouge != null)
         {
-            Color currentColor = screenOverlay.color;
+            Color currentColor = fondRouge.color;
             if (shouldPlay)
                 currentColor.a = Mathf.Min(1f, currentColor.a + redOverlaySpeed * Time.deltaTime);
             else
                 currentColor.a = Mathf.Max(0f, currentColor.a - redOverlaySpeed * Time.deltaTime);
 
-            screenOverlay.color = currentColor;
+            fondRouge.color = currentColor;
         }
     }
 
@@ -205,7 +211,6 @@ public class SimpleEnemyAI : MonoBehaviour
                 yield return new WaitForSeconds(flashDuration);
             }
 
-            // Affiche le screamer à la fin
             deathCanvasObject.SetActive(true);
         }
 
@@ -213,7 +218,21 @@ public class SimpleEnemyAI : MonoBehaviour
         SceneManager.LoadScene("GameOver");
     }
 
+    private void AdjustFondRougeTransparency()
+    {
+        if (fondRouge == null || player == null) return;
 
+        // Calcule la distance entre l'ennemi et le joueur
+        float distance = Vector2.Distance(transform.position, player.position);
+
+        // Ajuste l'alpha en fonction de la distance (plus proche = plus opaque)
+        float alpha = Mathf.Clamp01(1f - (distance / detectionRange));
+
+        // Modifie la transparence de l'image
+        Color color = fondRouge.color;
+        color.a = alpha;
+        fondRouge.color = color;
+    }
 
     void OnDrawGizmosSelected()
     {

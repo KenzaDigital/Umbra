@@ -102,7 +102,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
                     var playerInteraction = player.GetComponent<PlayerInteraction>();
                     if (playerInteraction != null)
                     {
-                      //playerInteraction.DisableInteractionPrompt();
+                        //playerInteraction.DisableInteractionPrompt();
                     }
 
                     // Affiche un message via le panel
@@ -117,13 +117,13 @@ public class InteractableObject : MonoBehaviour, IInteractable
                         }
                         else
                         {
-                           // Debug.LogWarning("panelToShow does not have a TextMeshProUGUI component.");
+                            // Debug.LogWarning("panelToShow does not have a TextMeshProUGUI component.");
                         }
                     }
                 }
                 else
                 {
-                   // Debug.LogError("Inventory component not found on the Player!");
+                    // Debug.LogError("Inventory component not found on the Player!");
                 }
                 break;
 
@@ -147,12 +147,25 @@ public class InteractableObject : MonoBehaviour, IInteractable
                 if (energyScript != null)
                 {
                     energyScript.Recharge(energyAmount); // Recharge l'énergie du joueur
+                    Debug.Log("Battery used to recharge energy.");
                 }
                 else
                 {
                     Debug.LogWarning("TorchEnergy script not found on the Player object.");
                 }
-                Debug.Log("Interacting with a battery.");
+
+                // Joue le son d'utilisation de la batterie
+                if (audioManager.instance != null)
+                {
+                    audioManager.instance.PlaySFX("Battery");
+                }
+                else
+                {
+                    Debug.LogWarning("audioManager instance is null.");
+                }
+
+                // Détruit l'objet batterie après interaction
+                Destroy(gameObject);
                 break;
         }
     }

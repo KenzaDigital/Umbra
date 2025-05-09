@@ -84,7 +84,7 @@ public void ShowFinalChoices(NpcDialogueData data)
         if (index == data.correctChoiceIndex)
         {
             Debug.Log("Bonne réponse !");
-            SceneManager.LoadScene("Scene_Victoire");
+            SceneManager.LoadScene("VictoryScene");
         }
         else
         {

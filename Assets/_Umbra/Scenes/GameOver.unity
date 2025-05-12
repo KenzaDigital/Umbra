@@ -1283,7 +1283,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Les ombres t'on engloutie
+  m_text: Les ombres t'ont englouti
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1198e78dbecb7f1419d4169c28a4ffa6, type: 2}
   m_sharedMaterial: {fileID: 1928603286001940055, guid: 1198e78dbecb7f1419d4169c28a4ffa6, type: 2}

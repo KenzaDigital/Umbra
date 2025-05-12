@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
+    public static Enemy currentChasingEnemy = null; // ENNEMI CONTRÔLEUR GLOBAL
+
     [Header("Déplacement")]
     public Transform[] patrolPoints;
     public float patrolSpeed = 2f;
@@ -19,7 +21,7 @@ public class Enemy : MonoBehaviour
     public float fastHeartbeatPitch = 1.5f;
 
     [Header("Effets Visuels")]
-    [SerializeField] private Image fondRouge; // Référence à l'image "FondRouge"
+    [SerializeField] private Image fondRouge;
     public float redOverlaySpeed = 1f;
 
     [Header("Fade Audio")]
@@ -45,7 +47,6 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        // Initialisation des AudioSources
         AudioSource[] sources = GetComponents<AudioSource>();
         if (sources.Length < 2)
         {
@@ -66,17 +67,14 @@ public class Enemy : MonoBehaviour
         musicSource.playOnAwake = false;
         musicSource.volume = 0f;
 
-        // AudioSource pour le cri
         audioSource = gameObject.AddComponent<AudioSource>();
 
-        // Désactiver le screamer au départ
         if (deathCanvasObject != null)
             deathCanvasObject.SetActive(false);
     }
 
     void Update()
     {
-        // Vérifie si le joueur est trouvé
         if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player")?.transform;
@@ -90,8 +88,12 @@ public class Enemy : MonoBehaviour
         if (isChasing)
         {
             ChasePlayer();
-            HandleChaseAudio(true);
-            HandleScreenOverlay(true);
+
+            if (currentChasingEnemy == this)
+            {
+                HandleChaseAudio(true);
+                HandleScreenOverlay(true);
+            }
 
             dangerTimer += Time.deltaTime;
 
@@ -105,15 +107,19 @@ public class Enemy : MonoBehaviour
         {
             Patrol();
             DetectPlayer();
-            HandleChaseAudio(false);
-            HandleScreenOverlay(false);
+
+            if (currentChasingEnemy == this)
+            {
+                HandleChaseAudio(false);
+                HandleScreenOverlay(false);
+            }
 
             dangerTimer = 0f;
             playerKilled = false;
         }
 
-        // Ajuste la transparence de "FondRouge"
-        AdjustFondRougeTransparency();
+        if (currentChasingEnemy == this)
+            AdjustFondRougeTransparency();
     }
 
     void Patrol()
@@ -136,6 +142,12 @@ public class Enemy : MonoBehaviour
         {
             player = hit.transform;
             isChasing = true;
+
+            if (currentChasingEnemy == null ||
+                Vector2.Distance(transform.position, player.position) < Vector2.Distance(currentChasingEnemy.transform.position, player.position))
+            {
+                currentChasingEnemy = this;
+            }
         }
     }
 
@@ -149,6 +161,9 @@ public class Enemy : MonoBehaviour
         if (distance > detectionRange * 1.5f)
         {
             isChasing = false;
+            if (currentChasingEnemy == this)
+                currentChasingEnemy = null;
+
             player = null;
         }
     }
@@ -187,6 +202,18 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void AdjustFondRougeTransparency()
+    {
+        if (fondRouge == null || player == null) return;
+
+        float distance = Vector2.Distance(transform.position, player.position);
+        float alpha = Mathf.Clamp01(0.50f - (distance / detectionRange));
+
+        Color color = fondRouge.color;
+        color.a = alpha;
+        fondRouge.color = color;
+    }
+
     void KillPlayer()
     {
         Debug.Log("Le joueur a été englouti !");
@@ -216,22 +243,6 @@ public class Enemy : MonoBehaviour
 
         yield return new WaitForSeconds(timeBeforeGameOver);
         SceneManager.LoadScene("GameOver");
-    }
-
-    private void AdjustFondRougeTransparency()
-    {
-        if (fondRouge == null || player == null) return;
-
-        // Calcule la distance entre l'ennemi et le joueur
-        float distance = Vector2.Distance(transform.position, player.position);
-
-        // Ajuste l'alpha en fonction de la distance (plus proche = plus opaque)
-        float alpha = Mathf.Clamp01(1f - (distance / detectionRange));
-
-        // Modifie la transparence de l'image
-        Color color = fondRouge.color;
-        color.a = alpha;
-        fondRouge.color = color;
     }
 
     void OnDrawGizmosSelected()

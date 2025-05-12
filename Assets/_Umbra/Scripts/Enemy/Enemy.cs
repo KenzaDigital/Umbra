@@ -1,11 +1,8 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
-    public static Enemy currentChasingEnemy = null; // ENNEMI CONTRÔLEUR GLOBAL
-
     [Header("Déplacement")]
     public Transform[] patrolPoints;
     public float patrolSpeed = 2f;
@@ -19,12 +16,6 @@ public class Enemy : MonoBehaviour
     public AudioClip heartbeatSound;
     public AudioClip scaryMusic;
     public float fastHeartbeatPitch = 1.5f;
-
-    [Header("Effets Visuels")]
-    [SerializeField] private Image fondRouge;
-    public float redOverlaySpeed = 1f;
-
-    [Header("Fade Audio")]
     public float audioFadeSpeed = 1f;
 
     [Header("Mort du joueur")]
@@ -89,10 +80,16 @@ public class Enemy : MonoBehaviour
         {
             ChasePlayer();
 
-            if (currentChasingEnemy == this)
+            bool isActiveEnemy = EnemyManager.Instance != null && EnemyManager.Instance.IsActiveEnemy(this);
+
+            if (isActiveEnemy)
             {
                 HandleChaseAudio(true);
-                HandleScreenOverlay(true);
+                HandleScreenOverlay();
+            }
+            else
+            {
+                HandleChaseAudio(false);
             }
 
             dangerTimer += Time.deltaTime;
@@ -107,19 +104,10 @@ public class Enemy : MonoBehaviour
         {
             Patrol();
             DetectPlayer();
-
-            if (currentChasingEnemy == this)
-            {
-                HandleChaseAudio(false);
-                HandleScreenOverlay(false);
-            }
-
+            HandleChaseAudio(false);
             dangerTimer = 0f;
             playerKilled = false;
         }
-
-        if (currentChasingEnemy == this)
-            AdjustFondRougeTransparency();
     }
 
     void Patrol()
@@ -142,12 +130,6 @@ public class Enemy : MonoBehaviour
         {
             player = hit.transform;
             isChasing = true;
-
-            if (currentChasingEnemy == null ||
-                Vector2.Distance(transform.position, player.position) < Vector2.Distance(currentChasingEnemy.transform.position, player.position))
-            {
-                currentChasingEnemy = this;
-            }
         }
     }
 
@@ -161,9 +143,6 @@ public class Enemy : MonoBehaviour
         if (distance > detectionRange * 1.5f)
         {
             isChasing = false;
-            if (currentChasingEnemy == this)
-                currentChasingEnemy = null;
-
             player = null;
         }
     }
@@ -188,35 +167,18 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void HandleScreenOverlay(bool shouldPlay)
+    void HandleScreenOverlay()
     {
-        if (fondRouge != null)
-        {
-            Color currentColor = fondRouge.color;
-            if (shouldPlay)
-                currentColor.a = Mathf.Min(1f, currentColor.a + redOverlaySpeed * Time.deltaTime);
-            else
-                currentColor.a = Mathf.Max(0f, currentColor.a - redOverlaySpeed * Time.deltaTime);
-
-            fondRouge.color = currentColor;
-        }
-    }
-
-    private void AdjustFondRougeTransparency()
-    {
-        if (fondRouge == null || player == null) return;
+        if (EnemyManager.Instance == null || player == null) return;
 
         float distance = Vector2.Distance(transform.position, player.position);
-        float alpha = Mathf.Clamp01(0.50f - (distance / detectionRange));
-
-        Color color = fondRouge.color;
-        color.a = alpha;
-        fondRouge.color = color;
+        float alpha = Mathf.Clamp01(1f - (distance / detectionRange));
+        EnemyManager.Instance.UpdateFondRouge(alpha);
     }
 
     void KillPlayer()
     {
-        Debug.Log("Le joueur a été englouti !");
+        Debug.Log("Le joueur a été tué !");
         StartCoroutine(PlayScreamerAndGameOver());
     }
 

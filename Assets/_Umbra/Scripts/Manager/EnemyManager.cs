@@ -8,6 +8,7 @@ public class EnemyManager : MonoBehaviour
 
     public Image fondRouge; // Assigne ici l’image UI "FondRouge"
     public float detectionRange = 5f;
+    public float redOverlaySpeed = 0.50f;
 
     private Enemy closestEnemy = null;
     private Transform player;
